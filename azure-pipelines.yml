@@ -27,8 +27,9 @@ steps:
     sudo docker run --name csound_emscripten_build_run -i sjamble/csound_emscripten
   displayName: Building the Csound emscripten build
 
-- script:|
+- script: |
     sudo docker cp csound_emscripten_build_run:/csound/Emscripten/Csound6.13.0-Web.zip $(System.DefaultWorkingDirectory)/
+  displayName: Extracting build file from docker image
 
 - task: PublishPipelineArtifact@1
   inputs:
