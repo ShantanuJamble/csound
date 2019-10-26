@@ -19,7 +19,8 @@ steps:
   displayName: 'Run a multi-line script'
 
 - script: 
-    sudo apt-get update  
-    sudo apt-get upgrade 
-    sudo apt-get install docker 
+    sudo apt-get update |  sudo apt-get upgrade 
+  displayName: Running apt updates
+- script: |
+    sudo apt-get install docker
   displayName: Setting up docker cli
