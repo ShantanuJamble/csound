@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- master
+- develop
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -22,3 +22,7 @@ steps:
 - script: |
     sudo apt-get install docker -y
   displayName: Setting up docker cli
+
+- script: |
+    sudo docker run -it sjamble/csound_emscripten
+  displayName: Building the Csound emscripten build
