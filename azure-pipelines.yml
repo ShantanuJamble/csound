@@ -18,9 +18,7 @@ steps:
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
 
-- script: 
-    sudo apt-get update |  sudo apt-get upgrade -y
-  displayName: Running apt updates
+
 - script: |
     sudo apt-get install docker -y
   displayName: Setting up docker cli
