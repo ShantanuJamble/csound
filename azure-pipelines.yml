@@ -33,5 +33,5 @@ steps:
 
 - task: PublishPipelineArtifact@1
   inputs:
-    path: $(System.DefaultWorkingDirectory)/
+    path: $(System.DefaultWorkingDirectory)/Csound6.13.0-Web.zip
     artifact: Csound6.13.0-Web.zip
