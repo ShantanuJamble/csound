@@ -31,7 +31,7 @@ jobs:
       displayName: Building the Csound emscripten build
 
     - script: |
-        sudo docker cp csound_emscripten_build_run:$(emscripten_zip_path)$(emscripten_artifact) $(System.DefaultWorkingDirectory)/
+        sudo docker cp $(emscripten_container_name):$(emscripten_zip_path)$(emscripten_artifact) $(System.DefaultWorkingDirectory)/
       displayName: Extracting web build file from docker image
 
     - task: PublishPipelineArtifact@1
@@ -50,7 +50,7 @@ jobs:
       displayName: Building the Csound Android build
 
     - script: |
-        sudo docker cp csound_emscripten_build_run:$(android_zip_path)$(android_artifact) $(System.DefaultWorkingDirectory)/
+        sudo docker cp $(android_container_name):$(android_zip_path)$(android_artifact) $(System.DefaultWorkingDirectory)/
       displayName: Extracting android build file from docker image
 
     - task: PublishPipelineArtifact@1
