@@ -9,29 +9,51 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+variables:
+  emscripten_container_name : 'csound_emscripten_build_run'
+  emscripten_zip_path : '/csound/Emscripten/' 
+  emscripten_artifact : 'Csound6.13.0-Web.zip'
+  emscripten_docker_image: 'sjamble/csound_emscripten'
+  android_container_name : 'csound_android_build_run'
+  android_zip_path : '/csound/Android/' 
+  android_artifact : 'Csound6.13.0-Android.zip'
+  android_docker_image: 'sjamble/csound_android'
+  
+jobs:
+  - job: "Emscripten_Build"
+    steps:
+    - script: |
+        sudo apt-get install docker -y
+      displayName: Setting up docker cli
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    - script: |
+        sudo docker run --name $(emscripten_container_name) -i $(emscripten_docker_image)
+      displayName: Building the Csound emscripten build
 
+    - script: |
+        sudo docker cp csound_emscripten_build_run:$(emscripten_zip_path)$(emscripten_artifact) $(System.DefaultWorkingDirectory)/
+      displayName: Extracting web build file from docker image
 
-- script: |
-    sudo apt-get install docker -y
-  displayName: Setting up docker cli
+    - task: PublishPipelineArtifact@1
+      inputs:
+        path: $(System.DefaultWorkingDirectory)/$(emscripten_artifact)
+        artifact: Csound6.13.0-WEB
 
-- script: |
-    sudo docker run --name csound_emscripten_build_run -i sjamble/csound_emscripten
-  displayName: Building the Csound emscripten build
+  - job: Android_Build
+    steps:
+    - script: |
+        sudo apt-get install docker -y
+      displayName: Setting up docker cli
 
-- script: |
-    sudo docker cp csound_emscripten_build_run:/csound/Emscripten/Csound6.13.0-Web.zip $(System.DefaultWorkingDirectory)/
-  displayName: Extracting build file from docker image
+    - script: |
+        sudo docker run --name $(android_container_name) -i $(android_docker_image)
+      displayName: Building the Csound Android build
 
-- task: PublishPipelineArtifact@1
-  inputs:
-    path: $(System.DefaultWorkingDirectory)/Csound6.13.0-Web.zip
-    artifact: Csound6.13.0-Web.zip
+    - script: |
+        sudo docker cp csound_emscripten_build_run:$(android_zip_path)$(android_artifact) $(System.DefaultWorkingDirectory)/
+      displayName: Extracting android build file from docker image
+
+    - task: PublishPipelineArtifact@1
+      inputs:
+        path: $(System.DefaultWorkingDirectory)/$(android_artifact)
+        artifact: Csound6.13.0-ANDROID
