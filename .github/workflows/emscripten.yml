@@ -14,8 +14,8 @@ jobs:
     - name: run the Docker image
       run: docker run --name cosund_test_run -i sjamble/csound_emscripten
     - name: copying build out of container
-      run: docker cp cosund_test_run:/csound/Emscripten/Csound6.13.0-Web.zip ~/
+      run: docker cp cosund_test_run:/csound/Emscripten/Csound6.13.0-Web.zip .
     - uses: actions/upload-artifact@master
       with:
        name: Csound6.13.0-Web.zip
-       path: ~/
+       path: .
