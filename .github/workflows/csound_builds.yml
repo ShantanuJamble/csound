@@ -15,7 +15,7 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
          name: Csound6.13.0-Web.zip
-         path: $HOME
+         path: ~/$HOME
   android_build:
       runs-on: ubuntu-latest
       steps:
@@ -26,4 +26,4 @@ jobs:
       - uses: actions/upload-artifact@master
         with:
          name: Csound6.13.0-Android.zip
-         path: $HOME
+         path: ~/$HOME
