@@ -11,19 +11,19 @@ jobs:
       - name: run the Docker image
         run: docker run --name cosund_test_run -i sjamble/csound_emscripten
       - name: copying build out of container
-        run: docker cp cosund_test_run:/csound/Emscripten/Csound6.13.0-Web.zip .
+        run: docker cp cosund_test_run:/csound/Emscripten/Csound6.13.0-Web.zip $HOME
       - uses: actions/upload-artifact@master
         with:
          name: Csound6.13.0-Web.zip
-         path: .
+         path: $HOME
   android_build:
       runs-on: ubuntu-latest
       steps:
       - name: run the Docker image
         run: docker run --name cosund_test_run -i sjamble/csound_android
       - name: copying build out of container
-        run: docker cp cosund_test_run:/csound/Android/Csound6.13.0-Android.zip .
+        run: docker cp cosund_test_run:/csound/Android/Csound6.13.0-Android.zip $HOME
       - uses: actions/upload-artifact@master
         with:
          name: Csound6.13.0-Android.zip
-         path: .
+         path: $HOME
